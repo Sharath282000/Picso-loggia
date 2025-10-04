@@ -26,12 +26,22 @@ const Openmodal = ({ setopenmodal, id }) => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: '400px',
     bgcolor: "background.paper",
     borderRadius: 3,
     boxShadow: 32,
     p: 4,
     transition: "all 0.5s ease-in-out",
+    maxHeight: '85vh',
+    overflowY: 'auto',
+    '@media (min-width: 600px)': {
+        maxWidth: 500,
+        maxHeight : '95vh',
+        width : 450,
+    },
+    '@media (max-width: 600px)': {
+        width: '90%',
+        p: 4,
+    },
   };
 
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -139,6 +149,12 @@ const Openmodal = ({ setopenmodal, id }) => {
               id={urlpic.id}
               width="100%"
               height="100%"
+              style={{
+                maxWidth: "100%",
+                maxHeight: "100%",
+                height: "auto",
+                display: "block",
+              }}
             />
             <div className="title">
               <Typography id="modal-modal-title" variant="p">

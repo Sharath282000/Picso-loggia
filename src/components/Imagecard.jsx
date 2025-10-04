@@ -97,9 +97,8 @@ const Imagecard = ({ displayImages, imagehandle, isLoading }) => {
             >
               <Skeleton
                 className="skeletiongrid-img"
-                width={350}
-                height={350}
-                style={{ borderRadius: 10, gridAutoRows: "100px" }}
+                height='350px'
+                style={{ borderRadius: 10, width : '350px' }}
               />
             </div>
           ))}

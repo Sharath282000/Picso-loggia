@@ -28,7 +28,6 @@ const Images = ({ issearch, searchimg }) => {
         fetchDataPromise, 
         minDelayPromise
       ]);
-      console.log(data)
       setimages(data.photos);
     } catch (error) {
       <Alert variant="error">"Failed to load images:", {error}</Alert>

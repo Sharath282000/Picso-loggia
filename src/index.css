@@ -61,9 +61,6 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 .skeletongrid-img {
-  margin: 10px;
-  columns: 4;
-  column-gap: 10px;
   overflow: hidden;
 }
 
