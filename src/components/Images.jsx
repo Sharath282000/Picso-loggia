@@ -1,43 +1,63 @@
-import { useState } from 'react'
-import { useEffect } from 'react'
-import requests from '../request'
-import Modal from './Modal'
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useState } from "react";
+import { useEffect } from "react";
+import requests from "../request";
+import Openmodal from "./Openmodal";
+import { Alert } from "@mui/material";
+import Imagecard from "./Imagecard";
 
 const Images = ({ issearch, searchimg }) => {
-    const [images, setimages] = useState([]);
-    const [openmodal, setopenmodel] = useState(false);
-    const [id, setid] = useState(0);
+  const [images, setimages] = useState([]);
+  const [openmodal, setopenmodel] = useState(false);
+  const [id, setid] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetchImages();
-    }, []);
-    const fetchImages = () => {
-        requests.fetchRandom.then(data => setimages(data.photos))
+  const MIN_LOADING_TIME_MS = 2000; // Define minimum display time (e.g., 500ms)
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+  useEffect(() => {
+        fetchImages()
+  }, [searchimg]);
+
+  const fetchImages = async () => {
+    setLoading(true);
+   try {
+      const fetchDataPromise = requests.fetchRandom; 
+      
+      const minDelayPromise = delay(MIN_LOADING_TIME_MS);
+      const [data] = await Promise.all([
+        fetchDataPromise, 
+        minDelayPromise
+      ]);
+      console.log(data)
+      setimages(data.photos);
+    } catch (error) {
+      <Alert variant="error">"Failed to load images:", {error}</Alert>
+    } finally {
+
+      setLoading(false); 
     }
+  };
 
-    const imagehandle = (e) => {
-        setid(e.target.id);
-        setopenmodel(true)
-    }
+  const imagehandle = (e) => {
+    setid(e.target.id);
+    setopenmodel(true);
+  };
 
-    return (
-        <div>
-            {!issearch &&
-                <div className='grid'>
-                    {images.length > 0 && images.map(data => <div key={data.id} className='grid-img'>
-                        <LazyLoadImage src={data.src.original} id={data.id} placeholderSrc="placeholder.png" width='100%' height='100%' effect="blur" onClick={imagehandle} /></div>
-                    )}
-                </div>}
-            {issearch &&
-                <div className='grid'>
-                    {searchimg.length > 0 && searchimg.map(data => <div key={data.id} className='grid-img'>
-                        <LazyLoadImage src={data.src.original} id={data.id} placeholderSrc="placeholder.png" width='100%' height='100%' effect="blur" onClick={imagehandle} /></div>
-                    )}
-                </div>}
-            {openmodal && <Modal id={id} openmodal={openmodal} setopenmodal={setopenmodel} />}
-        </div>
-    )
-}
+  const displayImages = issearch && searchimg.length > 0 ? searchimg : images;
 
-export default Images
+  return (
+    <div>
+      <Imagecard
+        displayImages={displayImages}
+        imagehandle={imagehandle}
+        isLoading={loading}
+        isSearchMode={issearch} 
+      />
+      {openmodal && (
+        <Openmodal id={id} openmodal={openmodal} setopenmodal={setopenmodel} />
+      )}
+    </div>
+  );
+};
+
+export default Images;

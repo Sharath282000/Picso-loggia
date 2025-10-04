@@ -1,7 +1,7 @@
 {
-  "name": "my-app",
+  "name": "picso-loggia",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,13 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.4",
+    "@mui/material": "^7.3.4",
     "dotenv": "^17.2.3",
     "install": "^0.13.0",
     "npm": "^11.6.1",
     "pexels": "^1.4.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-lazy-load-image-component": "^1.6.3"
+    "react-lazy-load-image-component": "^1.6.3",
+    "react-loading-skeleton": "^3.5.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
